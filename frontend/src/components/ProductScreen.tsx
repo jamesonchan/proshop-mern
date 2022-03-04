@@ -1,15 +1,33 @@
-import React from "react";
-import products from "../products";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "./Rating";
+import axios from "axios";
+import { ProductProp } from "../typings";
 
 interface ProductScreenProps {}
 
 const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
+  const [product, setProduct] = useState<ProductProp>();
+  const [loading, setLoading] = useState(false);
   const params = useParams();
-  const product = products.find((p) => p._id === params.id);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true);
+      const { data } = await axios.get(`/api/products/${params.id}`);
+      setLoading(false);
+      setProduct(data);
+    };
+
+    fetchProduct();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -70,9 +88,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
             </Card>
           </Col>
         </Row>
-      ) : (
-        <div>Product not found...</div>
-      )}
+      ) : null}
     </>
   );
 };
