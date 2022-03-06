@@ -1,58 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "./Rating";
-import axios from "axios";
-import { ProductProp } from "../typings";
+import { useDispatch, useSelector } from "react-redux";
+import { productDetails } from "../actions/productActions";
+import { selectProductDetails } from "../reducers/productReducers";
+import Loader from "./Loader";
+import Message from "./Message";
 
 interface ProductScreenProps {}
 
 const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
-  const [product, setProduct] = useState<ProductProp>();
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { loading, error, singleProduct } = useSelector(selectProductDetails);
   const params = useParams();
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true);
-      const { data } = await axios.get(`/api/products/${params.id}`);
-      setLoading(false);
-      setProduct(data);
-    };
-
-    fetchProduct();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    dispatch(productDetails(params.id));
+  }, [dispatch, params.id]);
 
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>
-      {product ? (
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : singleProduct ? (
         <Row>
           <Col md={6}>
-            <Image src={product.image} alt={product.name} fluid />
+            <Image src={singleProduct.image} alt={singleProduct.name} fluid />
           </Col>
 
           <Col md={3}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h3>{product.name}</h3>
+                <h3>{singleProduct.name}</h3>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
+                  value={singleProduct.rating}
+                  text={`${singleProduct.numReviews} reviews`}
                 />
               </ListGroup.Item>
-              <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+              <ListGroup.Item>Price: ${singleProduct.price}</ListGroup.Item>
               <ListGroup.Item>
-                Description: ${product.description}
+                Description: ${singleProduct.description}
               </ListGroup.Item>
             </ListGroup>
           </Col>
@@ -63,7 +59,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
                   <Row>
                     <Col>Price:</Col>
                     <Col>
-                      <strong>${product.price}</strong>
+                      <strong>${singleProduct.price}</strong>
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -71,7 +67,9 @@ const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
                   <Row>
                     <Col>Status:</Col>
                     <Col>
-                      {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                      {singleProduct.countInStock > 0
+                        ? "In Stock"
+                        : "Out of Stock"}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -79,7 +77,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
                   <Button
                     className="btn-block"
                     type="button"
-                    disabled={!product.countInStock}
+                    disabled={!singleProduct.countInStock}
                   >
                     Add to Cart
                   </Button>

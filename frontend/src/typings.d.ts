@@ -1,4 +1,4 @@
-export  interface ProductProp {
+export interface ProductProp {
   _id: string;
   name: string;
   image: string;
@@ -9,4 +9,5 @@ export  interface ProductProp {
   countInStock: number;
   rating: number;
   numReviews: number;
+  reviews: string[];
 }
