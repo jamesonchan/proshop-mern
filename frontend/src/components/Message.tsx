@@ -6,7 +6,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ variant, children }) => {
-  return <Alert variant={variant}></Alert>;
+  return <Alert variant={variant}>{children}</Alert>;
 };
 
 Message.defaultProps = {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ThunkAction } from "redux-thunk";
 import {
-  ActionType,
+  ProductActionType,
   ProductDetailsAction,
   ProductListAction,
 } from "../actionType/productActionType";
@@ -11,17 +11,17 @@ export const listProducts =
   (): ThunkAction<Promise<void>, RootState, undefined, ProductListAction> =>
   async (dispatch) => {
     try {
-      dispatch({ type: ActionType.PRODUCT_LIST_REQUEST });
+      dispatch({ type: ProductActionType.PRODUCT_LIST_REQUEST });
 
       const { data } = await axios.get("/api/products");
 
       dispatch({
-        type: ActionType.PRODUCT_LIST_SUCCESS,
+        type: ProductActionType.PRODUCT_LIST_SUCCESS,
         payload: data,
       });
     } catch (error: any) {
       dispatch({
-        type: ActionType.PRODUCT_LIST_FAIL,
+        type: ProductActionType.PRODUCT_LIST_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
@@ -36,15 +36,15 @@ export const productDetails =
   ): ThunkAction<Promise<void>, RootState, undefined, ProductDetailsAction> =>
   async (dispatch) => {
     try {
-      dispatch({ type: ActionType.PRODUCT_DETAILS_REQUEST });
+      dispatch({ type: ProductActionType.PRODUCT_DETAILS_REQUEST });
       const { data } = await axios.get(`/api/products/${id}`);
       dispatch({
-        type: ActionType.PRODUCT_DETAILS_SUCCESS,
+        type: ProductActionType.PRODUCT_DETAILS_SUCCESS,
         payload: data,
       });
     } catch (error: any) {
       dispatch({
-        type: ActionType.PRODUCT_DETAILS_FAIL,
+        type: ProductActionType.PRODUCT_DETAILS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

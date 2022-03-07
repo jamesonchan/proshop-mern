@@ -1,5 +1,5 @@
 import {
-  ActionType,
+  ProductActionType,
   ProductDetailsAction,
   ProductListAction,
 } from "../actionType/productActionType";
@@ -26,13 +26,13 @@ export const productListReducer = (
   action: ProductListAction
 ): ProductListState => {
   switch (action.type) {
-    case ActionType.PRODUCT_LIST_REQUEST:
+    case ProductActionType.PRODUCT_LIST_REQUEST:
       return { ...state, loading: true };
 
-    case ActionType.PRODUCT_LIST_SUCCESS:
+    case ProductActionType.PRODUCT_LIST_SUCCESS:
       return { ...state, products: action.payload, loading: false };
 
-    case ActionType.PRODUCT_LIST_FAIL:
+    case ProductActionType.PRODUCT_LIST_FAIL:
       return { ...state, error: action.payload, loading: false };
 
     default:
@@ -60,13 +60,13 @@ export const productDetailsReducer = (
   action: ProductDetailsAction
 ): ProductDetailsState => {
   switch (action.type) {
-    case ActionType.PRODUCT_DETAILS_REQUEST:
+    case ProductActionType.PRODUCT_DETAILS_REQUEST:
       return { ...state, loading: true };
 
-    case ActionType.PRODUCT_DETAILS_SUCCESS:
+    case ProductActionType.PRODUCT_DETAILS_SUCCESS:
       return { ...state, loading: false, singleProduct: action.payload };
 
-    case ActionType.PRODUCT_DETAILS_FAIL:
+    case ProductActionType.PRODUCT_DETAILS_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     default:

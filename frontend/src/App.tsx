@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomeScreen from "./components/HomeScreen";
 import ProductScreen from "./components/ProductScreen";
+import CartScreen from "./components/CartScreen";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/cart/:id" element={<CartScreen/>}/> 
+            <Route path="/cart" element={<CartScreen/>}/> 
           </Routes>
         </Container>
       </main>

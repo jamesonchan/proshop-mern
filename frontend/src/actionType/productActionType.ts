@@ -1,6 +1,6 @@
 import { ProductProp } from "../typings";
 
-export enum ActionType {
+export enum ProductActionType {
   PRODUCT_LIST_REQUEST = "product_list_request",
   PRODUCT_LIST_SUCCESS = "product_list_success",
   PRODUCT_LIST_FAIL = "product_list_fail",
@@ -11,16 +11,16 @@ export enum ActionType {
 
 // ProductList Action
 export interface RequestProductListAction {
-  type: ActionType.PRODUCT_LIST_REQUEST;
+  type: ProductActionType.PRODUCT_LIST_REQUEST;
 }
 
 export interface SuccessProductListAction {
-  type: ActionType.PRODUCT_LIST_SUCCESS;
+  type: ProductActionType.PRODUCT_LIST_SUCCESS;
   payload: ProductProp[];
 }
 
 export interface FailProductListAction {
-  type: ActionType.PRODUCT_LIST_FAIL;
+  type: ProductActionType.PRODUCT_LIST_FAIL;
   payload: string;
 }
 
@@ -31,16 +31,16 @@ export type ProductListAction =
 
 // ProductDetails Action
 export interface RequestProductDetailsAction {
-  type: ActionType.PRODUCT_DETAILS_REQUEST;
+  type: ProductActionType.PRODUCT_DETAILS_REQUEST;
 }
 
 export interface SuccessProductDetailsAction {
-  type: ActionType.PRODUCT_DETAILS_SUCCESS;
+  type: ProductActionType.PRODUCT_DETAILS_SUCCESS;
   payload: ProductProp | null;
 }
 
 export interface FailProductDetailsAction {
-  type: ActionType.PRODUCT_DETAILS_FAIL;
+  type: ProductActionType.PRODUCT_DETAILS_FAIL;
   payload: string;
 }
 
