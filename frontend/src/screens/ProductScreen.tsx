@@ -10,12 +10,13 @@ import {
   Button,
   Form,
 } from "react-bootstrap";
-import Rating from "./Rating";
+
 import { useDispatch, useSelector } from "react-redux";
 import { productDetails } from "../actions/productActions";
 import { selectProductDetails } from "../reducers/productReducers";
-import Loader from "./Loader";
-import Message from "./Message";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Rating from "../components/Rating";
 
 interface ProductScreenProps {}
 

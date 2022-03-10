@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Product from "../components/Product";
 import { selectProductList } from "../reducers/productReducers";
-import Loader from "./Loader";
-import Message from "./Message";
-import Product from "./Product";
 
 interface HomeScreenProps {}
 

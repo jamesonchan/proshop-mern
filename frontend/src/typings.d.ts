@@ -11,3 +11,11 @@ export interface ProductProp {
   numReviews: number;
   reviews: string[];
 }
+
+export interface UserInfo {
+  _id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  token: string;
+}

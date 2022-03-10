@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useSearchParams, useNavigate, useParams } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import Message from "../components/Message";
 import { selectCart } from "../reducers/cartReducers";
-import Message from "./Message";
+
 
 interface CartScreenProps {}
 
