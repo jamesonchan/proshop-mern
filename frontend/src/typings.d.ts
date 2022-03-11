@@ -19,3 +19,10 @@ export interface UserInfo {
   isAdmin: boolean;
   token: string;
 }
+
+export interface UpdateUserProfile {
+  id: string | undefined;
+  name: string;
+  email: string;
+  password: string;
+}
