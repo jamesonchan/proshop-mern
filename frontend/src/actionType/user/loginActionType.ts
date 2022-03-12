@@ -1,10 +1,16 @@
-import { UserInfo } from "../typings";
-
 export enum LoginActionType {
   USER_LOGIN_REQUEST = "user_login_request",
   USER_LOGIN_SUCCESS = "user_login_success",
   USER_LOGIN_FAIL = "user_login_fail",
   USER_LOGOUT = "user_logout",
+}
+
+export interface UserInfo {
+  _id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  token: string;
 }
 
 export interface LoginRequestAction {

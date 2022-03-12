@@ -4,7 +4,7 @@ import {
   ProductActionType,
   ProductDetailsAction,
   ProductListAction,
-} from "../actionType/productActionType";
+} from "../actionType/product/productActionType";
 import { RootState } from "../store";
 
 export const listProducts =

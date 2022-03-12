@@ -1,4 +1,4 @@
-import { UserInfo } from "../typings";
+import { UserInfo } from "./loginActionType";
 
 export enum DetailActionType {
   USER_DETAIL_REQUEST = "user_detail_request",

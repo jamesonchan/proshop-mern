@@ -1,10 +1,15 @@
-import { UpdateUserProfile } from "../typings";
-
 export enum UpdateActionType {
   USER_UPDATE_REQUEST = "user_update_request",
   USER_UPDATE_SUCCESS = "user_update_success",
   USER_UPDATE_FAIL = "user_update_fail",
   USER_UPDATE_RESET = "user_update_reset",
+}
+
+export interface UpdateUserProfile {
+  id: string | undefined;
+  name: string;
+  email: string;
+  password: string;
 }
 
 export interface UpdateRequestAction {

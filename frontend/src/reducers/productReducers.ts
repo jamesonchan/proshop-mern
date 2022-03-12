@@ -2,9 +2,9 @@ import {
   ProductActionType,
   ProductDetailsAction,
   ProductListAction,
-} from "../actionType/productActionType";
+  ProductProp,
+} from "../actionType/product/productActionType";
 import { RootState } from "../store";
-import { ProductProp } from "../typings";
 
 interface ProductListState {
   products: ProductProp[];

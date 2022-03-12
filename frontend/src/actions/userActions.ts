@@ -1,14 +1,24 @@
 import axios from "axios";
 import { ThunkAction } from "redux-thunk";
-import { DetailAction, DetailActionType } from "../actionType/detailActionType";
-import { LoginAction, LoginActionType } from "../actionType/loginActionType";
+import {
+  DetailAction,
+  DetailActionType,
+} from "../actionType/user/detailActionType";
+import {
+  LoginAction,
+  LoginActionType,
+} from "../actionType/user/loginActionType";
 import {
   RegisterAction,
   RegisterActionType,
-} from "../actionType/registerActionType";
-import { UpdateAction, UpdateActionType } from "../actionType/updateActionType";
+} from "../actionType/user/registerActionType";
+import {
+  UpdateAction,
+  UpdateActionType,
+  UpdateUserProfile,
+} from "../actionType/user/updateActionType";
+
 import { RootState } from "../store";
-import { UpdateUserProfile, UserInfo } from "../typings";
 
 export const login =
   (

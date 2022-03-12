@@ -1,4 +1,4 @@
-import { UserInfo } from "../typings";
+import { UserInfo } from "./loginActionType";
 
 export enum RegisterActionType {
   USER_REGISTER_REQUEST = "user_register_request",

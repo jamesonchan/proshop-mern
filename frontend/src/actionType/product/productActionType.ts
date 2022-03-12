@@ -1,5 +1,3 @@
-import { ProductProp } from "../typings";
-
 export enum ProductActionType {
   PRODUCT_LIST_REQUEST = "product_list_request",
   PRODUCT_LIST_SUCCESS = "product_list_success",
@@ -7,6 +5,20 @@ export enum ProductActionType {
   PRODUCT_DETAILS_REQUEST = "product_details_request",
   PRODUCT_DETAILS_SUCCESS = "product_details_success",
   PRODUCT_DETAILS_FAIL = "product_details_fail",
+}
+
+export interface ProductProp {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+  brand: string;
+  category: string;
+  price: number;
+  countInStock: number;
+  rating: number;
+  numReviews: number;
+  reviews: string[];
 }
 
 // ProductList Action
