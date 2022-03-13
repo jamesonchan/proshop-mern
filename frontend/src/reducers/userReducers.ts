@@ -107,6 +107,8 @@ export const userDetailReducer = (
       return { loading: false, user: action.payload };
     case DetailActionType.USER_DETAIL_FAIL:
       return { loading: false, error: action.payload };
+    case DetailActionType.USER_DETAIL_RESET:
+      return { user: null };
 
     default:
       return state;

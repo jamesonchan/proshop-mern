@@ -53,7 +53,7 @@ const PlaceOrderScreen: React.FC<PlaceOrderScreenProps> = ({}) => {
     if (success) {
       navigate(`/order/${order?._id}`);
     }
-  }, [navigate, success]);
+  }, [navigate, success, order?._id]);
 
   return (
     <>

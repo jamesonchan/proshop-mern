@@ -1,6 +1,10 @@
 import axios from "axios";
 import { ThunkAction } from "redux-thunk";
 import {
+  OrderAction,
+  OrderActionType,
+} from "../actionType/cart/orderActionType";
+import {
   DetailAction,
   DetailActionType,
 } from "../actionType/user/detailActionType";
@@ -53,10 +57,17 @@ export const login =
   };
 
 export const logout =
-  (): ThunkAction<Promise<void>, RootState, undefined, LoginAction> =>
+  (): ThunkAction<
+    Promise<void>,
+    RootState,
+    undefined,
+    LoginAction | DetailAction | OrderAction
+  > =>
   async (dispatch) => {
     localStorage.removeItem("userInfo");
     dispatch({ type: LoginActionType.USER_LOGOUT });
+    dispatch({ type: DetailActionType.USER_DETAIL_RESET });
+    dispatch({ type: OrderActionType.ORDER_PAY_RESET });
   };
 
 export const register =
