@@ -9,6 +9,11 @@ import {
   DetailActionType,
 } from "../actionType/user/detailActionType";
 import {
+  ListAction,
+  ListActionType,
+  UpdateUserInfo,
+} from "../actionType/user/listActionType";
+import {
   LoginAction,
   LoginActionType,
 } from "../actionType/user/loginActionType";
@@ -21,7 +26,6 @@ import {
   UpdateActionType,
   UpdateUserProfile,
 } from "../actionType/user/updateActionType";
-
 import { RootState } from "../store";
 
 export const login =
@@ -61,13 +65,14 @@ export const logout =
     Promise<void>,
     RootState,
     undefined,
-    LoginAction | DetailAction | OrderAction
+    LoginAction | DetailAction | OrderAction | ListAction
   > =>
   async (dispatch) => {
     localStorage.removeItem("userInfo");
     dispatch({ type: LoginActionType.USER_LOGOUT });
     dispatch({ type: DetailActionType.USER_DETAIL_RESET });
     dispatch({ type: OrderActionType.ORDER_PAY_RESET });
+    dispatch({ type: ListActionType.USER_LIST_RESET });
   };
 
 export const register =
@@ -172,6 +177,111 @@ export const updateUserProfile =
     } catch (error: any) {
       dispatch({
         type: UpdateActionType.USER_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const listUsers =
+  (): ThunkAction<Promise<void>, RootState, undefined, ListAction> =>
+  async (dispatch, getState) => {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    try {
+      dispatch({ type: ListActionType.USER_LIST_REQUEST });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+      const { data } = await axios.get(`/api/users`, config);
+
+      dispatch({
+        type: ListActionType.USER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ListActionType.USER_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const deleteUser =
+  (
+    userId: string
+  ): ThunkAction<Promise<void>, RootState, undefined, ListAction> =>
+  async (dispatch, getState) => {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    try {
+      dispatch({ type: ListActionType.USER_DELETE_REQUEST });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+      await axios.delete(`/api/users/${userId}`, config);
+
+      dispatch({
+        type: ListActionType.USER_DELETE_SUCCESS,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ListActionType.USER_DELETE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const updateUser =
+  (
+    updateUser: UpdateUserInfo
+  ): ThunkAction<
+    Promise<void>,
+    RootState,
+    undefined,
+    ListAction | DetailAction
+  > =>
+  async (dispatch, getState) => {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    try {
+      dispatch({ type: ListActionType.USER_UPDATE_REQUEST });
+      const config = {
+        headers: {
+          "Context-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `/api/users/${updateUser._id}`,
+        updateUser,
+        config
+      );
+
+      dispatch({ type: ListActionType.USER_UPDATE_SUCCESS });
+
+      dispatch({
+        type: DetailActionType.USER_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ListActionType.USER_UPDATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

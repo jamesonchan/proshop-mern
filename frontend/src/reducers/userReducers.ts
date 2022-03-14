@@ -17,6 +17,7 @@ import {
   UpdateActionType,
   UpdateUserProfile,
 } from "../actionType/user/updateActionType";
+import { ListAction, ListActionType } from "../actionType/user/listActionType";
 
 interface LoginState {
   userInfo?: UserInfo | null;
@@ -145,6 +146,103 @@ export const userUpdateProfileReducer = (
       return { loading: false, error: action.payload };
     case UpdateActionType.USER_UPDATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+interface UserListState {
+  users?: UserInfo[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+const initialUserListState: UserListState = {
+  users: [],
+  loading: false,
+  error: null,
+};
+
+export const selectUserList = (rootState: RootState) => rootState.userList;
+
+export const userListReducer = (
+  state: UserListState = initialUserListState,
+  action: ListAction
+): UserListState => {
+  switch (action.type) {
+    case ListActionType.USER_LIST_REQUEST:
+      return { loading: true };
+    case ListActionType.USER_LIST_SUCCESS:
+      return { loading: false, users: action.payload };
+    case ListActionType.USER_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    case ListActionType.USER_LIST_RESET:
+      return { users: [] };
+
+    default:
+      return state;
+  }
+};
+
+interface UserDeleteState {
+  loading: boolean;
+  success?: boolean;
+  error?: string | null;
+}
+
+const initialUserDeleteState: UserDeleteState = {
+  loading: false,
+  success: false,
+  error: null,
+};
+
+export const selectUserDelete = (rootState: RootState) => rootState.userDelete;
+
+export const userDeleteReducer = (
+  state: UserDeleteState = initialUserDeleteState,
+  action: ListAction
+): UserDeleteState => {
+  switch (action.type) {
+    case ListActionType.USER_DELETE_REQUEST:
+      return { loading: true };
+    case ListActionType.USER_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case ListActionType.USER_DELETE_FAIL:
+      return { loading: false, error: action.payload, success: false };
+
+    default:
+      return state;
+  }
+};
+
+interface UserUpdateState {
+  success?: boolean;
+  loading?: boolean;
+  error?: string | null;
+}
+
+const initialUserUpdateState: UserUpdateState = {
+  success: false,
+  loading: false,
+  error: null,
+};
+
+export const selectUserUpdate = (rootState: RootState) => rootState.userUpdate;
+
+export const userUpdateReducer = (
+  state: UserUpdateState = initialUserUpdateState,
+  action: ListAction
+): UserUpdateState => {
+  switch (action.type) {
+    case ListActionType.USER_UPDATE_REQUEST:
+      return { loading: true };
+    case ListActionType.USER_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case ListActionType.USER_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case ListActionType.USER_UPDATE_RESET:
+      return {};
+
     default:
       return state;
   }
