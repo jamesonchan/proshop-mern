@@ -57,7 +57,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
-                  value={singleProduct.rating}
+                  value={singleProduct.rating as number}
                   text={`${singleProduct.numReviews} reviews`}
                 />
               </ListGroup.Item>
