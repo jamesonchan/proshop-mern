@@ -4,16 +4,19 @@ import {
   ProductAction,
   ProductActionType,
   ProductProp,
+  Reviews,
 } from "../actionType/product/productActionType";
 import { RootState } from "../store";
 
 export const listProducts =
-  (): ThunkAction<Promise<void>, RootState, undefined, ProductAction> =>
+  (
+    keyword: string = ""
+  ): ThunkAction<Promise<void>, RootState, undefined, ProductAction> =>
   async (dispatch) => {
     try {
       dispatch({ type: ProductActionType.PRODUCT_LIST_REQUEST });
 
-      const { data } = await axios.get("/api/products");
+      const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 
       dispatch({
         type: ProductActionType.PRODUCT_LIST_SUCCESS,
@@ -145,6 +148,40 @@ export const updateProduct =
     } catch (error: any) {
       dispatch({
         type: ProductActionType.PRODUCT_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const createProductReview =
+  (
+    productId: string,
+    review: Reviews
+  ): ThunkAction<Promise<void>, RootState, undefined, ProductAction> =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: ProductActionType.PRODUCT_CREATE_REVIEW_REQUEST });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          "Context-Type": "application/json",
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
+      await axios.post(`/api/products/${productId}/reviews`, review, config);
+
+      dispatch({
+        type: ProductActionType.PRODUCT_CREATE_REVIEW_SUCCESS,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ProductActionType.PRODUCT_CREATE_REVIEW_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

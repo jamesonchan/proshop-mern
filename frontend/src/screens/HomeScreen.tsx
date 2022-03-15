@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { listProducts } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -11,12 +12,14 @@ interface HomeScreenProps {}
 
 const HomeScreen: React.FC<HomeScreenProps> = ({}) => {
   const dispatch = useDispatch();
+  const params = useParams();
+  const keyword = params.keyword;
 
   const { loading, error, products } = useSelector(selectProductList);
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>

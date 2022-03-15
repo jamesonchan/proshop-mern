@@ -20,6 +20,11 @@ export enum ProductActionType {
   PRODUCT_UPDATE_SUCCESS = "product_update_success",
   PRODUCT_UPDATE_FAIL = "product_update_fail",
   PRODUCT_UPDATE_RESET = "product_update_reset",
+
+  PRODUCT_CREATE_REVIEW_REQUEST = "product_create_review_request",
+  PRODUCT_CREATE_REVIEW_SUCCESS = "product_create_review_success",
+  PRODUCT_CREATE_REVIEW_FAIL = "product_create_review_fail",
+  PRODUCT_CREATE_REVIEW_RESET = "product_create_review_reset",
 }
 
 export interface ProductProp {
@@ -33,7 +38,15 @@ export interface ProductProp {
   countInStock: number;
   rating?: number;
   numReviews?: number;
-  reviews?: string[];
+  reviews?: Reviews[];
+}
+
+export interface Reviews {
+  _id?: string;
+  name?: string;
+  rating: number;
+  comment: string;
+  createdAt?: string;
 }
 
 // ProductList Action
@@ -118,6 +131,24 @@ interface ProductUpdateResetAction {
   type: ProductActionType.PRODUCT_UPDATE_RESET;
 }
 
+// create review action
+interface ProductCreateReviewReuqestAction {
+  type: ProductActionType.PRODUCT_CREATE_REVIEW_REQUEST;
+}
+
+interface ProductCreateReviewSuccessAction {
+  type: ProductActionType.PRODUCT_CREATE_REVIEW_SUCCESS;
+}
+
+interface ProductCreateReviewFailAction {
+  type: ProductActionType.PRODUCT_CREATE_REVIEW_FAIL;
+  payload: string;
+}
+
+interface ProductCreateReviewResetAction {
+  type: ProductActionType.PRODUCT_CREATE_REVIEW_RESET;
+}
+
 export type ProductAction =
   | RequestProductDetailsAction
   | SuccessProductDetailsAction
@@ -135,4 +166,8 @@ export type ProductAction =
   | ProductUpdateRequestAction
   | ProductUpdateSuccessAction
   | ProductUpdateFailAction
-  | ProductUpdateResetAction;
+  | ProductUpdateResetAction
+  | ProductCreateReviewReuqestAction
+  | ProductCreateReviewSuccessAction
+  | ProductCreateReviewFailAction
+  | ProductCreateReviewResetAction;
