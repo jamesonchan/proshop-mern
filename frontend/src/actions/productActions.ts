@@ -10,17 +10,25 @@ import { RootState } from "../store";
 
 export const listProducts =
   (
-    keyword: string = ""
+    keyword: string = "",
+    pageNumber: string = ""
   ): ThunkAction<Promise<void>, RootState, undefined, ProductAction> =>
   async (dispatch) => {
     try {
       dispatch({ type: ProductActionType.PRODUCT_LIST_REQUEST });
 
-      const { data } = await axios.get(`/api/products?keyword=${keyword}`);
+      const { data } = await axios.get(
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      );
 
+      const { products, page, pages } = data;
       dispatch({
         type: ProductActionType.PRODUCT_LIST_SUCCESS,
-        payload: data,
+        payload: {
+          products,
+          page,
+          pages,
+        },
       });
     } catch (error: any) {
       dispatch({

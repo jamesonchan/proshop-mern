@@ -56,7 +56,11 @@ interface RequestProductListAction {
 
 interface SuccessProductListAction {
   type: ProductActionType.PRODUCT_LIST_SUCCESS;
-  payload: ProductProp[];
+  payload: {
+    products: ProductProp[];
+    page: string;
+    pages: number;
+  };
 }
 
 interface FailProductListAction {

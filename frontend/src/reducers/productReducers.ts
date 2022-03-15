@@ -7,12 +7,16 @@ import { RootState } from "../store";
 
 interface ProductListState {
   products: ProductProp[];
+  page: string;
+  pages: number;
   loading: boolean;
   error: string | null;
 }
 
 const initialProductListState: ProductListState = {
   products: [],
+  page: "",
+  pages: 0,
   loading: false,
   error: null,
 };
@@ -29,7 +33,13 @@ export const productListReducer = (
       return { ...state, loading: true };
 
     case ProductActionType.PRODUCT_LIST_SUCCESS:
-      return { ...state, products: action.payload, loading: false };
+      return {
+        ...state,
+        products: action.payload.products,
+        loading: false,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
 
     case ProductActionType.PRODUCT_LIST_FAIL:
       return { ...state, error: action.payload, loading: false };
