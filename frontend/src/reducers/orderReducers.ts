@@ -171,3 +171,68 @@ export const orderListMyReducer = (
       return state;
   }
 };
+
+interface OrderAllState {
+  allOrder?: Order[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+const initialOrderAllState: OrderAllState = {
+  allOrder: [],
+  loading: false,
+  error: null,
+};
+
+export const selectOrderAll = (rootState: RootState) => rootState.orderAll;
+
+export const orderAllReducer = (
+  state: OrderAllState = initialOrderAllState,
+  action: OrderAction
+): OrderAllState => {
+  switch (action.type) {
+    case OrderActionType.ORDER_ALL_REQUEST:
+      return { loading: true };
+    case OrderActionType.ORDER_ALL_SUCCESS:
+      return { loading: false, allOrder: action.payload };
+    case OrderActionType.ORDER_ALL_FAIL:
+      return { loading: false, error: action.payload };
+    case OrderActionType.ORDER_ALL_RESET:
+      return { allOrder: [] };
+    default:
+      return state;
+  }
+};
+
+interface OrderDeliverState {
+  success?: boolean;
+  loading?: boolean;
+  error?: string | null;
+}
+
+const initialOrderDeliverState: OrderDeliverState = {
+  success: false,
+  loading: false,
+  error: null,
+};
+
+export const selectOrderDeliver = (rootState: RootState) =>
+  rootState.orderDeliver;
+
+export const orderDeliverReducer = (
+  state: OrderDeliverState = initialOrderDeliverState,
+  action: OrderAction
+): OrderDeliverState => {
+  switch (action.type) {
+    case OrderActionType.ORDER_DELIVER_REQUEST:
+      return { loading: true };
+    case OrderActionType.ORDER_DELIVER_SUCCESS:
+      return { loading: false, success: true };
+    case OrderActionType.ORDER_DETAIL_FAIL:
+      return { loading: false, error: action.payload };
+    case OrderActionType.ORDER_DELIVER_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
