@@ -155,7 +155,12 @@ export const getUserDetail =
 export const updateUserProfile =
   (
     user: UpdateUserProfile
-  ): ThunkAction<Promise<void>, RootState, undefined, UpdateAction> =>
+  ): ThunkAction<
+    Promise<void>,
+    RootState,
+    undefined,
+    UpdateAction | LoginAction
+  > =>
   async (dispatch, getState) => {
     const {
       userLogin: { userInfo },
@@ -174,6 +179,11 @@ export const updateUserProfile =
         type: UpdateActionType.USER_UPDATE_SUCCESS,
         payload: data,
       });
+      dispatch({
+        type: LoginActionType.USER_LOGIN_SUCCESS,
+        payload: data,
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error: any) {
       dispatch({
         type: UpdateActionType.USER_UPDATE_FAIL,

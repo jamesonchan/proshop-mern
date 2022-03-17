@@ -13,6 +13,7 @@ import {
   selectUserDetail,
   selectUserLogin,
 } from "../reducers/userReducers";
+import { UpdateActionType } from "../actionType/user/updateActionType";
 
 interface ProfileScreenProps {}
 
@@ -43,7 +44,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({}) => {
     if (!userInfo) {
       navigate(`/login`);
     } else {
-      if (!user?.name) {
+      if (!user || !user?.name || success) {
+        dispatch({ type: UpdateActionType.USER_UPDATE_RESET });
         dispatch(getUserDetail("profile"));
         dispatch(listMyOrder());
       } else {
@@ -51,7 +53,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({}) => {
         setEmail(user.email);
       }
     }
-  }, [userInfo, navigate, dispatch, user]);
+  }, [userInfo, navigate, dispatch, user, success]);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
