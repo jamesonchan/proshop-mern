@@ -41,6 +41,29 @@ export const listProducts =
     }
   };
 
+export const listTopProducts =
+  (): ThunkAction<Promise<void>, RootState, undefined, ProductAction> =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ProductActionType.PRODUCT_TOP_REQUEST });
+
+      const { data } = await axios.get(`/api/products/top`);
+
+      dispatch({
+        type: ProductActionType.PRODUCT_TOP_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ProductActionType.PRODUCT_TOP_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
 export const productDetails =
   (
     id: string | undefined

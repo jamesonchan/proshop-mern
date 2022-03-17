@@ -25,6 +25,10 @@ export enum ProductActionType {
   PRODUCT_CREATE_REVIEW_SUCCESS = "product_create_review_success",
   PRODUCT_CREATE_REVIEW_FAIL = "product_create_review_fail",
   PRODUCT_CREATE_REVIEW_RESET = "product_create_review_reset",
+
+  PRODUCT_TOP_REQUEST = "product_top_request",
+  PRODUCT_TOP_SUCCESS = "product_top_success",
+  PRODUCT_TOP_FAIL = "product_top_fail",
 }
 
 export interface ProductProp {
@@ -153,6 +157,21 @@ interface ProductCreateReviewResetAction {
   type: ProductActionType.PRODUCT_CREATE_REVIEW_RESET;
 }
 
+// get top rated products
+interface ProductTopRequestAction {
+  type: ProductActionType.PRODUCT_TOP_REQUEST;
+}
+
+interface ProductTopSuccessAction {
+  type: ProductActionType.PRODUCT_TOP_SUCCESS;
+  payload: ProductProp[];
+}
+
+interface ProductTopFailAction {
+  type: ProductActionType.PRODUCT_TOP_FAIL;
+  payload: string;
+}
+
 export type ProductAction =
   | RequestProductDetailsAction
   | SuccessProductDetailsAction
@@ -174,4 +193,7 @@ export type ProductAction =
   | ProductCreateReviewReuqestAction
   | ProductCreateReviewSuccessAction
   | ProductCreateReviewFailAction
-  | ProductCreateReviewResetAction;
+  | ProductCreateReviewResetAction
+  | ProductTopRequestAction
+  | ProductTopSuccessAction
+  | ProductTopFailAction;

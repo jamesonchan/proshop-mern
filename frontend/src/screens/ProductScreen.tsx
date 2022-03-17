@@ -25,6 +25,7 @@ import {
   ProductActionType,
   Reviews,
 } from "../actionType/product/productActionType";
+import TitleMeta from "../components/TitleMeta";
 
 interface ProductScreenProps {}
 
@@ -76,6 +77,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({}) => {
         <Message variant="danger">{error}</Message>
       ) : singleProduct ? (
         <>
+          <TitleMeta title={singleProduct.name} />
           <Row>
             <Col md={6}>
               <Image src={singleProduct.image} alt={singleProduct.name} fluid />

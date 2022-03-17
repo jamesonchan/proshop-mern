@@ -229,3 +229,36 @@ export const productReviewCreateReducer = (
       return state;
   }
 };
+
+interface ProductTopState {
+  products?: ProductProp[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+const initialProductTopState: ProductTopState = {
+  products: [],
+  loading: false,
+  error: null,
+};
+
+export const selectProductTop = (rootState: RootState) => rootState.productTop;
+
+export const productTopReducer = (
+  state: ProductTopState = initialProductTopState,
+  action: ProductAction
+): ProductTopState => {
+  switch (action.type) {
+    case ProductActionType.PRODUCT_TOP_REQUEST:
+      return { loading: true };
+
+    case ProductActionType.PRODUCT_TOP_SUCCESS:
+      return { loading: false, products: action.payload };
+
+    case ProductActionType.PRODUCT_TOP_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
